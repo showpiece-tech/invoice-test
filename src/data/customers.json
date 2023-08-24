@@ -1,0 +1,25 @@
+{
+  "customers": [
+    {
+      "id":"5ac51f7e-81b1-49c6-9c39-78b2d171abd6",
+      "name":"Miss Juanita Balistreri",
+      "address":"91469 Lelah Lane",
+      "email":"Noemi64@yahoo.com",
+      "phone":"68-903603-904483-1"
+    },
+    {
+      "id":"b82e2165-b555-4b9f-a5bf-f7744f7721a9",
+      "name":"Jennie Kunde",
+      "address":"5537 Hudson Harbor",
+      "email":"Janet_Price13@gmail.com",
+      "phone":"09-072697-917647-7"
+    },
+    {
+      "id":"a8764b5f-8c54-4519-a398-ccb63aa9e0d5",
+      "name":"Alvin Satterfield",
+      "address":"25002 Lori Divide",
+      "email":"Lilla.Howe@hotmail.com",
+      "phone":"74-436519-154836-9"
+    }
+  ]
+}

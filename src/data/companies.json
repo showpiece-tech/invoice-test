@@ -1,0 +1,36 @@
+{
+  "companies": [
+    {
+      "id":"9f97a1c4-d45a-41d8-8dc2-1aa51b4e55c6",
+      "company":"Hansen, Lakin and Kiehn",
+      "logo":"https://loremflickr.com/350/350/nature?lock=1217452465717248",
+      "address":"45837 Milton Plains",
+      "email":"Hope.Kozey@yahoo.com",
+      "phone":"352-679-6605 x39361"
+    },
+    {
+      "id":"313392af-5ccb-47cf-a337-f2498e0df1bb",
+      "company":"Schmidt, Dooley and Weber",
+      "logo":"https://loremflickr.com/350/350/nature?lock=7248619046436864",
+      "address":"56333 Pierre Station",
+      "email":"Braden_Friesen@hotmail.com",
+      "phone":"(328) 204-8919 x4078"
+    },
+    {
+      "id":"b3371104-7ee8-425e-94c9-d4f74e16602f",
+      "company":"Jacobson and Sons",
+      "logo":"https://loremflickr.com/350/350/nature?lock=4796838326566912",
+      "address":"47555 Corkery River",
+      "email":"Amya.Kreiger@gmail.com",
+      "phone":"797.966.1774"
+    },
+    {
+      "id":"4302a4a2-dbb3-4179-bf0f-041b2762b52d",
+      "company":"Rutherford Group",
+      "logo":"https://loremflickr.com/350/350/nature?lock=2219122452594688",
+      "address":"15033 Hollie Pass",
+      "email":"Manuel90@hotmail.com",
+      "phone":"(698) 315-7559 x9208"
+    },
+  ]
+}
