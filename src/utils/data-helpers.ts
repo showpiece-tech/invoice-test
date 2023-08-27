@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 export interface Customer {
   id: string;
@@ -7,15 +7,15 @@ export interface Customer {
   email: string;
   phone: string;
 }
-export const createCustomer = () : Customer => {
+export const createCustomer = (): Customer => {
   return {
     id: faker.string.uuid(),
     name: faker.person.fullName(),
     address: faker.location.streetAddress(),
     email: faker.internet.email(),
     phone: faker.phone.imei(),
-  }
-}
+  };
+};
 
 interface Company {
   id: string;
@@ -25,16 +25,20 @@ interface Company {
   email: string;
   phone: string;
 }
-export const createCompany = () : Company => {
+export const createCompany = (): Company => {
   return {
     id: faker.string.uuid(),
     company: faker.company.name(),
-    logo: faker.image.urlLoremFlickr({category: "nature", width: 350, height: 350}),
+    logo: faker.image.urlLoremFlickr({
+      category: "nature",
+      width: 350,
+      height: 350,
+    }),
     address: faker.location.streetAddress(),
     email: faker.internet.email(),
-    phone: faker.phone.number()
-  }
-}
+    phone: faker.phone.number(),
+  };
+};
 
 export interface LineItem {
   title: string;
@@ -42,41 +46,45 @@ export interface LineItem {
   price: number;
   quantity: number;
 }
-export const createLineItem = () : LineItem => {
+export const createLineItem = (): LineItem => {
   return {
     title: faker.commerce.productName(),
     description: faker.commerce.productDescription(),
-    price: faker.number.int({min: 20, max: 250}),
-    quantity: faker.number.int({min: 1, max: 15})
-  }
-}
+    price: faker.number.int({ min: 20, max: 250 }),
+    quantity: faker.number.int({ min: 1, max: 15 }),
+  };
+};
 
 export interface Invoice {
   id: string;
   number: number;
-  dateIssued: Date;
-  dateDue: Date;
+  dateIssued: Date | string;
+  dateDue: Date | string;
   settled: Boolean;
   recipient: string;
   patron: string;
   items: LineItem[];
   discount?: number;
 }
-export const createInvoice = (customer: string, company: string, lineItems: number): Invoice => {
+export const createInvoice = (
+  customer: string,
+  company: string,
+  lineItems: number
+): Invoice => {
   let items: LineItem[] = [];
 
   for (let i = 0; i < lineItems; i++) {
-    items.push(createLineItem())
+    items.push(createLineItem());
   }
 
   return {
     id: faker.string.uuid(),
-    number: faker.number.int({min: 1, max: 100}),
+    number: faker.number.int({ min: 1, max: 100 }),
     dateIssued: faker.date.recent(),
     dateDue: faker.date.future(),
-    settled: faker.datatype.boolean({probability: .65}),
+    settled: faker.datatype.boolean({ probability: 0.65 }),
     recipient: customer,
     patron: company,
     items,
-  }
-}
+  };
+};
