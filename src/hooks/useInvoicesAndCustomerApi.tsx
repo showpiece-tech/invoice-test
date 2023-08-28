@@ -1,47 +1,55 @@
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import apiInstance from "../utils/axios-config";
 import { Customer, Invoice } from "@/utils/data-helpers";
+import { useEffect, useState } from "react";
 
-export default function useInvoicesAndCustomerApi(): {
-  invoices: Invoice[];
-  customer: Customer;
-  isLoading: boolean;
-  isError: boolean;
-  setUserId: React.Dispatch<React.SetStateAction<string>>;
-  resetData: () => void;
-} {
+export default function useInvoicesAndCustomerApi() {
   const [userId, setUserId] = useState("5ac51f7e-81b1-49c6-9c39-78b2d171abd6");
-  const queryClient = useQueryClient();
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [customer, setCustomer] = useState<Customer | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isError, setIsError] = useState(false);
 
-  const {
-    data: invoices,
-    isLoading: isLoadingInvoices,
-    isError: isInvoiceError,
-  } = useQuery(["invoices", userId], () =>
-    apiInstance(`/invoices/${userId}`, {
-      method: "GET",
-    }).then((res) => res.data?.data)
-  );
+  useEffect(() => {
+    const getInvoices = async () => {
+      return apiInstance(`/invoices/${userId}`, {
+        method: "GET",
+      });
+    };
 
-  const {
-    data: customer,
-    isLoading: isLoadingCustomers,
-    isError: isCustomerError,
-  } = useQuery(["customer", userId], () =>
-    apiInstance(`/findCustomer/${userId}`, {
-      method: "GET",
-    }).then((res) => res.data?.data)
-  );
+    const getCustomer = async () => {
+      return apiInstance(`/findCustomer/${userId}`, {
+        method: "GET",
+      });
+    };
 
-  const resetData = () => queryClient.invalidateQueries();
+    setIsLoading(true);
+    Promise.all([getInvoices(), getCustomer()])
+      .then((res) => {
+        console.log(res);
+        setInvoices(res[0].data.data);
+        setCustomer(res[1].data.data);
+      })
+      .catch((err) => {
+        setIsError(true);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
+
+  const deleteInvoice = async (invoiceId: string) => {
+    apiInstance(`/invoices/${userId}/${invoiceId}`, {
+      method: "DELETE",
+    }).then(() => {
+      setInvoices((prev) => prev.filter((invoice) => invoice.id !== invoiceId));
+    });
+  };
 
   return {
     invoices,
     customer,
-    isLoading: isLoadingInvoices || isLoadingCustomers,
-    isError: isInvoiceError || isCustomerError,
-    setUserId,
-    resetData,
+    isLoading,
+    isError,
+    deleteInvoice,
   };
 }

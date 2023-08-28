@@ -30,7 +30,6 @@ import { formatDateDDMMYY } from "@/utils/date-helpers";
 import {
   getSumOfAllDiscounts,
   getInvoiceAmount,
-  getInvoiceDiscount,
   getSumOfIvoices,
 } from "@/utils/invoice-helpers";
 import { Invoice } from "@/utils/data-helpers";
@@ -47,22 +46,24 @@ const ConfirmationDeletionModal = ({
   confirm: () => void;
 }) => {
   return (
-    <Modal blockScrollOnMount={false} isOpen={isOpen} onClose={onClose}>
+    <Modal blockScrollOnMount={true} isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Modal Title</ModalHeader>
+        <ModalHeader>Delete Invoice</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Text fontWeight="bold" mb="1rem">
-            You can scroll the content behind the modal
+          <Text mb="1rem">
+            Are you sure? You can't undo this action afterwards.
           </Text>
         </ModalBody>
 
         <ModalFooter>
-          <Button colorScheme="blue" mr={3} onClick={onClose}>
-            Close
+          <Button variant="ghost" mr={3} onClick={onClose}>
+            Cancel
           </Button>
-          <Button variant="ghost">Secondary Action</Button>
+          <Button colorScheme="red" mr={3} onClick={confirm}>
+            Delete
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
@@ -70,10 +71,18 @@ const ConfirmationDeletionModal = ({
 };
 
 export default function Home() {
-  const { invoices, customer, isLoading, isError } =
+  const { invoices, customer, isLoading, isError, deleteInvoice } =
     useInvoicesAndCustomerApi();
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [selectedInvoice, setSelectedInvoice] = useState<Invoice | null>(null);
+
+  const handleDeleteInvoice = () => {
+    if (selectedInvoice) {
+      deleteInvoice(selectedInvoice.id);
+      setModalOpen(false);
+    }
+  };
 
   return (
     <>
@@ -110,50 +119,42 @@ export default function Home() {
                 </Thead>
                 <Tbody>
                   {invoices &&
-                    invoices.map(
-                      (
-                        {
-                          number,
-                          id,
-                          dateDue,
-                          dateIssued,
-                          settled,
-                          items,
-                          discount,
-                        },
-                        index
-                      ) => (
-                        <Tr key={id} color={!settled ? "red" : undefined}>
-                          <Td
-                            position="sticky"
-                            top={0}
-                            left={0}
-                            zIndex={50}
-                            bgColor={index % 2 != 0 ? "white" : undefined}
-                          >
-                            {number}
-                          </Td>
-                          <Td>{formatDateDDMMYY(dateDue as string)}</Td>
-                          <Td>{formatDateDDMMYY(dateIssued as string)}</Td>
-                          <Td color={discount ? "green" : undefined}>
-                            $
-                            {Number(
-                              getInvoiceAmount({ items } as Invoice)
-                            ).toFixed(2)}
-                          </Td>
-                          <Td>
-                            {!settled && (
-                              <IconButton
-                                aria-label="Delete Invoice"
-                                icon={<DeleteIcon color="red" />}
-                                onClick={() => setModalOpen(true)}
-                                bgColor="inherit"
-                              />
-                            )}
-                          </Td>
-                        </Tr>
-                      )
-                    )}
+                    invoices.map((invoice: Invoice, index: number) => (
+                      <Tr
+                        key={invoice.id}
+                        color={!invoice.settled ? "red" : undefined}
+                      >
+                        <Td
+                          position="sticky"
+                          top={0}
+                          left={0}
+                          zIndex={50}
+                          bgColor={index % 2 != 0 ? "white" : undefined}
+                        >
+                          {invoice.number}
+                        </Td>
+                        <Td>{formatDateDDMMYY(invoice.dateDue as string)}</Td>
+                        <Td>
+                          {formatDateDDMMYY(invoice.dateIssued as string)}
+                        </Td>
+                        <Td color={invoice.discount ? "green" : undefined}>
+                          ${Number(getInvoiceAmount(invoice)).toFixed(2)}
+                        </Td>
+                        <Td>
+                          {!invoice.settled && (
+                            <IconButton
+                              aria-label="Delete Invoice"
+                              icon={<DeleteIcon color="red" />}
+                              onClick={() => {
+                                setSelectedInvoice(invoice);
+                                setModalOpen(true);
+                              }}
+                              bgColor="inherit"
+                            />
+                          )}
+                        </Td>
+                      </Tr>
+                    ))}
                 </Tbody>
               </Table>
             </TableContainer>
@@ -212,6 +213,13 @@ export default function Home() {
         <Flex justifyContent="center" alignItems="center" height="100vh">
           <Text fontSize="lg">Error!</Text>
         </Flex>
+      )}
+      {modalOpen && (
+        <ConfirmationDeletionModal
+          isOpen={modalOpen}
+          onClose={() => setModalOpen(false)}
+          confirm={handleDeleteInvoice}
+        />
       )}
     </>
   );

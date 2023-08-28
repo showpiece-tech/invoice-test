@@ -1618,19 +1618,6 @@
   dependencies:
     "tslib" "^2.4.0"
 
-"@tanstack/query-core@4.33.0":
-  "integrity" "sha512-qYu73ptvnzRh6se2nyBIDHGBQvPY1XXl3yR769B7B6mIDD7s+EZhdlWHQ67JI6UOTFRaI7wupnTnwJ3gE0Mr/g=="
-  "resolved" "https://registry.npmjs.org/@tanstack/query-core/-/query-core-4.33.0.tgz"
-  "version" "4.33.0"
-
-"@tanstack/react-query@^4.33.0":
-  "integrity" "sha512-97nGbmDK0/m0B86BdiXzx3EW9RcDYKpnyL2+WwyuLHEgpfThYAnXFaMMmnTDuAO4bQJXEhflumIEUfKmP7ESGA=="
-  "resolved" "https://registry.npmjs.org/@tanstack/react-query/-/react-query-4.33.0.tgz"
-  "version" "4.33.0"
-  dependencies:
-    "@tanstack/query-core" "4.33.0"
-    "use-sync-external-store" "^1.2.0"
-
 "@types/babel__core@^7.1.14":
   "integrity" "sha512-aACu/U/omhdk15O4Nfb+fHgH/z3QsfQzpnvRZhYhThms83ZnAOZz7zZAWO7mn2yyNQaA4xTO8GLK3uqFU4bYYw=="
   "resolved" "https://registry.npmjs.org/@types/babel__core/-/babel__core-7.20.1.tgz"
@@ -5139,11 +5126,6 @@
   dependencies:
     "detect-node-es" "^1.1.0"
     "tslib" "^2.0.0"
-
-"use-sync-external-store@^1.2.0":
-  "integrity" "sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA=="
-  "resolved" "https://registry.npmjs.org/use-sync-external-store/-/use-sync-external-store-1.2.0.tgz"
-  "version" "1.2.0"
 
 "v8-to-istanbul@^9.0.1":
   "integrity" "sha512-6z3GW9x8G1gd+JIIgQQQxXuiJtCXeAjp6RaPEPLv62mH3iPHPxV6W3robxtCzNErRo6ZwTmzWhsbNvjyEBKzKA=="
