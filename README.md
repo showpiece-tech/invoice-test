@@ -12,16 +12,18 @@ yarn dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
 ---
+
 ## Task
-We have set up this partial simple invoice project for you to complete. 
+
+We have set up this partial simple invoice project for you to complete.
 Below is a list of tasks that we would like you to complete.
 
 The tech stack is simple, using what we normally use on our projects, [NextJS](https://nextjs.org/docs) and [Chakra](https://chakra-ui.com/docs/components) for the UI.
 
 You are free to add any other additional packages you require and can edit/refactor any of the existing code to complete any of the tasks.
 
-
 - [ ] The `/api/invoices` is incomplete, please add the following:
+
   - [ ] Sort the api by invoice number
   - [ ] Add a discount of 10% to all invoices that are unpaid and are more than $100 in total (price on the invoice is in cents)
   - [ ] Make sure that if there are no results that an appropriate status code is sent back
@@ -33,7 +35,7 @@ You are free to add any other additional packages you require and can edit/refac
 
 - [ ] Add a feature that enables the user to delete invoices that have not been paid, user should get a prompt to confirm before deleting the item
 
-- [ ] Format all dates `dd-mm-yyyy` 
+- [ ] Format all dates `dd-mm-yyyy`
 
 - [ ] Currency is give in cents, format them as `$00.00`
 
@@ -47,9 +49,15 @@ You are free to add any other additional packages you require and can edit/refac
 
 - [ ] Add the `Discount` to the totals table at the bottom panel
 
-- [ ] Mobile - fix the invoice # column to be sticky on the left side when table scrolls horizontally 
+- [ ] Mobile - fix the invoice # column to be sticky on the left side when table scrolls horizontally
 
 ---
+
 ## Designs
+
 ![Screenshot](./public/designs/design-invice-list.png)
 ![Screenshot](./public/designs/design-invice-list-delete.png)
+
+## Testing
+
+Use Node version 18 as Node 16 will not work!
