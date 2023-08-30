@@ -220,38 +220,40 @@ export default function Home() {
             </Table>
           </TableContainer>
         </GeneralBox>
-        <GeneralBox>
-          <Table fontSize="sm" variant="striped">
-            <Tbody>
-              <Tr>
-                <Td>
-                  <strong>Discount:</strong>
-                </Td>
-                <Td textAlign="right">{formatCurrency(totalDiscount)}</Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <strong>Invoice Total:</strong>
-                </Td>
-                <Td textAlign="right">{formatCurrency(customerTotal)}</Td>
-              </Tr>
-              <Tr>
-                <Td>
-                  <strong>Total Paid:</strong>
-                </Td>
-                <Td textAlign="right">{formatCurrency(totalPaid)}</Td>
-              </Tr>
-              <Tr>
-                <Td border="none">
-                  <strong>Total Owed:</strong>
-                </Td>
-                <Td border="none" textAlign="right">
-                  {formatCurrency(totalOwed)}
-                </Td>
-              </Tr>
-            </Tbody>
-          </Table>
-        </GeneralBox>
+        <Flex justifyContent={"flex-end"}>
+          <GeneralBox>
+            <Table fontSize="sm" variant="striped">
+              <Tbody>
+                <Tr>
+                  <Td>
+                    <strong>Discount:</strong>
+                  </Td>
+                  <Td textAlign="right">{formatCurrency(totalDiscount)}</Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <strong>Invoice Total:</strong>
+                  </Td>
+                  <Td textAlign="right">{formatCurrency(customerTotal)}</Td>
+                </Tr>
+                <Tr>
+                  <Td>
+                    <strong>Total Paid:</strong>
+                  </Td>
+                  <Td textAlign="right">{formatCurrency(totalPaid)}</Td>
+                </Tr>
+                <Tr>
+                  <Td border="none">
+                    <strong>Total Owed:</strong>
+                  </Td>
+                  <Td border="none" textAlign="right">
+                    {formatCurrency(totalOwed)}
+                  </Td>
+                </Tr>
+              </Tbody>
+            </Table>
+          </GeneralBox>
+        </Flex>
         <ConfirmModal
           isOpen={isOpen}
           onClose={onClose}
