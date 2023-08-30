@@ -14,12 +14,13 @@ import {
 } from "@chakra-ui/react";
 import { PageWrapper } from "./components/pageWrapper";
 import { GeneralBox } from "./components/generalBox";
-import { Customer, Invoice } from "@/utils/data-helpers";
+import { Customer, Invoice, LineItem } from "@/utils/data-helpers";
 
 export default function Home() {
   const [userId, setUserId] = useState("5ac51f7e-81b1-49c6-9c39-78b2d171abd6");
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [invoices, setInvoices] = useState<Invoice[] | null>(null);
+  const [discount, setDiscount] = useState(0);
 
   const getCustomer = async () => {
     try {
@@ -56,6 +57,18 @@ export default function Home() {
     getInvoices();
   }, [userId]);
 
+  const getTotal = (items: LineItem[], discount: number = 0) => {
+    let total = items.reduce((accumulator, currentItem) => {
+      return accumulator + currentItem.price * currentItem.quantity;
+    }, 0);
+    if (discount > 0) {
+      console.log(discount);
+      let discountAmount = (total * discount) / 100;
+      total = total - discountAmount;
+    }
+    return Math.round(total) / 100;
+  };
+
   return (
     <>
       <PageWrapper>
@@ -76,18 +89,30 @@ export default function Home() {
                   <Th>Invoice #</Th>
                   <Th>Date Due</Th>
                   <Th>Date Sent</Th>
+                  <Th>Amount</Th>
                   <Td></Td>
                 </Tr>
               </Thead>
               <Tbody>
                 {invoices &&
-                  invoices.map(({ number, id, dateDue, dateIssued }) => (
-                    <Tr key={id}>
-                      <Td>{number}</Td>
-                      <Td>{dateDue.toString()}</Td>
-                      <Td>{dateIssued.toString()}</Td>
-                    </Tr>
-                  ))}
+                  invoices.map(
+                    ({
+                      number,
+                      id,
+                      dateDue,
+                      dateIssued,
+                      items,
+                      settled,
+                      discount,
+                    }) => (
+                      <Tr key={id} color={!settled ? "red" : ""}>
+                        <Td>{number}</Td>
+                        <Td>{dateDue.toString()}</Td>
+                        <Td>{dateIssued.toString()}</Td>
+                        <Td>{getTotal(items, discount)}</Td>
+                      </Tr>
+                    )
+                  )}
               </Tbody>
             </Table>
           </TableContainer>
