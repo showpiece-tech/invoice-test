@@ -158,7 +158,15 @@ export default function Home() {
             <Table fontSize="sm" variant="striped">
               <Thead>
                 <Tr>
-                  <Th>Invoice #</Th>
+                  <Th
+                    position="sticky"
+                    left={0}
+                    zIndex="sticky"
+                    bg="white"
+                    boxShadow="md"
+                  >
+                    Invoice #
+                  </Th>
                   <Th>Date Due</Th>
                   <Th>Date Sent</Th>
                   <Th>Amount</Th>
@@ -178,7 +186,15 @@ export default function Home() {
                       discount,
                     }) => (
                       <Tr key={id} color={!settled ? "red" : ""}>
-                        <Td>{number}</Td>
+                        <Td
+                          position="sticky"
+                          left={0}
+                          zIndex="sticky"
+                          bg="white"
+                          boxShadow="md"
+                        >
+                          {number}
+                        </Td>
                         <Td>{formatDate(dateDue)}</Td>
                         <Td>{formatDate(dateIssued)}</Td>
                         <Td color={discount && discount > 0 ? "green" : ""}>
