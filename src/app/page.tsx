@@ -12,6 +12,8 @@ import {
   Td,
   TableContainer,
 } from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { IconButton } from "@chakra-ui/react";
 import { PageWrapper } from "./components/pageWrapper";
 import { GeneralBox } from "./components/generalBox";
 import { Customer, Invoice, LineItem } from "@/utils/data-helpers";
@@ -87,7 +89,7 @@ export default function Home() {
         totalDiscount += discountAmount / 100;
       }
       total += amount / 100;
-      settled ? (totalPaid += amount/100) : (totalOwed += amount/100);
+      settled ? (totalPaid += amount / 100) : (totalOwed += amount / 100);
     });
     return { total, totalDiscount, totalPaid, totalOwed };
   };
@@ -159,6 +161,18 @@ export default function Home() {
                         <Td color={discount && discount > 0 ? "green" : ""}>
                           {getInvoiceAmount(items, discount)}
                         </Td>
+                        <Td>
+                          {!settled ? (
+                            <IconButton
+                              colorScheme="red"
+                              aria-label="Delete invoice"
+                              isRound={true}
+                              icon={<DeleteIcon />}
+                            />
+                          ) : (
+                            ""
+                          )}
+                        </Td>
                       </Tr>
                     )
                   )}
@@ -167,7 +181,7 @@ export default function Home() {
           </TableContainer>
         </GeneralBox>
         <GeneralBox>
-          <Table fontSize="sm"  variant="striped">
+          <Table fontSize="sm" variant="striped">
             <Tbody>
               <Tr>
                 <Td>
