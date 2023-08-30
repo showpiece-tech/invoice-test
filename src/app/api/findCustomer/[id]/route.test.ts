@@ -1,5 +1,5 @@
-import fetch from "node-fetch";
 import { createMocks } from 'node-mocks-http';
+
 import { GET } from './route'
 describe("Find Customer Route", () => {
   describe("GET customer", () => {
