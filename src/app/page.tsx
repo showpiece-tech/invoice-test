@@ -110,7 +110,7 @@ export default function Home() {
                         <Td>{number}</Td>
                         <Td>{dateDue.toString()}</Td>
                         <Td>{dateIssued.toString()}</Td>
-                        <Td>{getTotal(items, discount)}</Td>
+                        <Td color={ discount && discount > 0 ? "green" : ""} >{getTotal(items, discount)}</Td>
                       </Tr>
                     )
                   )}
