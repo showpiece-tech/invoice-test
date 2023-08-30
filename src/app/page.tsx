@@ -70,6 +70,12 @@ export default function Home() {
 
   };
 
+  const formatDate = (date: Date) => {
+    const myDate = new Date(date)
+    const newDate = new Intl.DateTimeFormat('en-US').format(myDate);
+    return newDate
+  }
+
   return (
     <>
       <PageWrapper>
@@ -108,8 +114,8 @@ export default function Home() {
                     }) => (
                       <Tr key={id} color={!settled ? "red" : ""}>
                         <Td>{number}</Td>
-                        <Td>{dateDue.toString()}</Td>
-                        <Td>{dateIssued.toString()}</Td>
+                        <Td>{formatDate(dateDue)}</Td>
+                        <Td>{formatDate(dateIssued)}</Td>
                         <Td color={ discount && discount > 0 ? "green" : ""} >{getTotal(items, discount)}</Td>
                       </Tr>
                     )
