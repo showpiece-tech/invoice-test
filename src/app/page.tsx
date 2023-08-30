@@ -66,7 +66,8 @@ export default function Home() {
       let discountAmount = (total * discount) / 100;
       total = total - discountAmount;
     }
-    return Math.round(total) / 100;
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total/100);
+
   };
 
   return (
