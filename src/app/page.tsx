@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Flex,
   Heading,
@@ -21,6 +21,26 @@ export default function Home() {
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [invoices, setInvoices] = useState<Invoice[] | null>(null);
 
+  const getCustomer = async () => {
+    try {
+      const response = await fetch(`/api/findCustomer/${userId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+      const {data} = await response.json();
+      setCustomer(data)
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(()=> {
+    getCustomer();
+  }, [userId])
+
   return (
     <>
       <PageWrapper>
@@ -31,7 +51,7 @@ export default function Home() {
 
         <GeneralBox>
           <TableContainer>
-            <Table fontSize="sm">
+            <Table fontSize="sm" variant='striped'  colorScheme='gray'>
               <Thead>
                 <Tr>
                   <Th>Invoice #</Th>
