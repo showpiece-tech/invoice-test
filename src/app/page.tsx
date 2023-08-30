@@ -11,11 +11,13 @@ import {
   Th,
   Td,
   TableContainer,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
 import { PageWrapper } from "./components/pageWrapper";
 import { GeneralBox } from "./components/generalBox";
+import { ConfirmModal } from "./components/confirmModal";
 import { Customer, Invoice, LineItem } from "@/utils/data-helpers";
 
 export default function Home() {
@@ -26,6 +28,10 @@ export default function Home() {
   const [totalDiscount, setTotalDiscount] = useState(0);
   const [totalPaid, setTotalPaid] = useState(0);
   const [totalOwed, setTotalOwed] = useState(0);
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const [selectedInvoiceId, setSelectedInvoiceId] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     getCustomer();
@@ -114,8 +120,25 @@ export default function Home() {
 
   const formatDate = (date: Date) => {
     const myDate = new Date(date);
-    const newDate = new Intl.DateTimeFormat("en-US").format(myDate);
+    const newDate = new Intl.DateTimeFormat("en-GB").format(myDate);
     return newDate;
+  };
+
+  const handleDeleteClick = (invoiceId: string) => {
+    setSelectedInvoiceId(invoiceId);
+    onOpen();
+  };
+
+  const handleDeleteConfirm = () => {
+    if (invoices) {
+      const updatedInvoices = invoices.filter(
+        (invoice) => invoice.id !== selectedInvoiceId
+      );
+
+      setInvoices(updatedInvoices);
+    }
+    setSelectedInvoiceId(null);
+    onClose();
   };
 
   return (
@@ -167,6 +190,7 @@ export default function Home() {
                               colorScheme="red"
                               aria-label="Delete invoice"
                               isRound={true}
+                              onClick={() => handleDeleteClick(id)}
                               icon={<DeleteIcon />}
                             />
                           ) : (
@@ -212,6 +236,11 @@ export default function Home() {
             </Tbody>
           </Table>
         </GeneralBox>
+        <ConfirmModal
+          isOpen={isOpen}
+          onClose={onClose}
+          onDelete={handleDeleteConfirm}
+        />
       </PageWrapper>
     </>
   );
