@@ -21,7 +21,7 @@ The tech stack is simple, using what we normally use on our projects, [NextJS](h
 You are free to add any other additional packages you require and can edit/refactor any of the existing code to complete any of the tasks.
 
 
-- [ ] The `/api/invoices` is incomplete, please add the following:
+- [X] The `/api/invoices` is incomplete, please add the following:
   - [X] Sort the api by invoice number
   - [X] Add a discount of 10% to all invoices that are unpaid and are more than $100 in total (price on the invoice is in cents)
   - [X] Make sure that if there are no results that an appropriate status code is sent back
@@ -41,13 +41,13 @@ You are free to add any other additional packages you require and can edit/refac
 
 - [X] Highlight table rows with unpaid invoices in red
 
-- [ ] Fix the table with the totals to look like the one designed, floating to the right
+- [X] Fix the table with the totals to look like the one designed, floating to the right
 
 - [X] If there is a discount, display the discounted price in the table and highlight the amount in green.
 
 - [X] Add the `Discount` to the totals table at the bottom panel
 
-- [ ] Mobile - fix the invoice # column to be sticky on the left side when table scrolls horizontally 
+- [X] Mobile - fix the invoice # column to be sticky on the left side when table scrolls horizontally 
 
 ---
 ## Designs
