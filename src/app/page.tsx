@@ -20,7 +20,21 @@ export default function Home() {
   const [userId, setUserId] = useState("5ac51f7e-81b1-49c6-9c39-78b2d171abd6");
   const [customer, setCustomer] = useState<Customer | null>(null);
   const [invoices, setInvoices] = useState<Invoice[] | null>(null);
-  const [discount, setDiscount] = useState(0);
+  const [customerTotal, setCustomerTotal] = useState(0);
+  const [totalDiscount, setTotalDiscount] = useState(0);
+
+  useEffect(() => {
+    getCustomer();
+    getInvoices();
+  }, [userId]);
+
+  useEffect(() => {
+    if (invoices) {
+      const { total, totalDiscount } = getCustomerTotal(invoices);
+      setCustomerTotal(total);
+      setTotalDiscount(totalDiscount);
+    }
+  }, [invoices]);
 
   const getCustomer = async () => {
     try {
@@ -52,29 +66,46 @@ export default function Home() {
     }
   };
 
-  useEffect(() => {
-    getCustomer();
-    getInvoices();
-  }, [userId]);
+  const getCustomerTotal = (invoices: Invoice[]) => {
+    let total = 0;
+    let totalDiscount = 0;
+    invoices.forEach(({ items, discount = 0 }) => {
+      let amount = items.reduce((accumulator, currentItem) => {
+        return accumulator + currentItem.price * currentItem.quantity;
+      }, 0);
+      if (discount > 0) {
+        const discountAmount = (amount * discount) / 100;
+        amount -= discountAmount;
+        totalDiscount += discountAmount / 100;
+      }
+      total += amount / 100;
+    });
+    return { total, totalDiscount };
+  };
 
-  const getTotal = (items: LineItem[], discount: number = 0) => {
+  const getInvoiceAmount = (items: LineItem[], discount: number = 0) => {
     let total = items.reduce((accumulator, currentItem) => {
       return accumulator + currentItem.price * currentItem.quantity;
     }, 0);
     if (discount > 0) {
-      console.log(discount);
       let discountAmount = (total * discount) / 100;
       total = total - discountAmount;
     }
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(total/100);
+    return formatCurrency(total / 100);
+  };
 
+  const formatCurrency = (amount: number) => {
+    return new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(amount);
   };
 
   const formatDate = (date: Date) => {
-    const myDate = new Date(date)
-    const newDate = new Intl.DateTimeFormat('en-US').format(myDate);
-    return newDate
-  }
+    const myDate = new Date(date);
+    const newDate = new Intl.DateTimeFormat("en-US").format(myDate);
+    return newDate;
+  };
 
   return (
     <>
@@ -116,7 +147,9 @@ export default function Home() {
                         <Td>{number}</Td>
                         <Td>{formatDate(dateDue)}</Td>
                         <Td>{formatDate(dateIssued)}</Td>
-                        <Td color={ discount && discount > 0 ? "green" : ""} >{getTotal(items, discount)}</Td>
+                        <Td color={discount && discount > 0 ? "green" : ""}>
+                          {getInvoiceAmount(items, discount)}
+                        </Td>
                       </Tr>
                     )
                   )}
@@ -131,13 +164,13 @@ export default function Home() {
                 <Td>
                   <strong>Discount:</strong>
                 </Td>
-                <Td textAlign="right">???</Td>
+                <Td textAlign="right">{formatCurrency(totalDiscount)}</Td>
               </Tr>
               <Tr>
                 <Td>
                   <strong>Invoice Total:</strong>
                 </Td>
-                <Td textAlign="right">???</Td>
+                <Td textAlign="right">{formatCurrency(customerTotal)}</Td>
               </Tr>
               <Tr>
                 <Td>
