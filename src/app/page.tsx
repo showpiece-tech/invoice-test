@@ -22,6 +22,8 @@ export default function Home() {
   const [invoices, setInvoices] = useState<Invoice[] | null>(null);
   const [customerTotal, setCustomerTotal] = useState(0);
   const [totalDiscount, setTotalDiscount] = useState(0);
+  const [totalPaid, setTotalPaid] = useState(0);
+  const [totalOwed, setTotalOwed] = useState(0);
 
   useEffect(() => {
     getCustomer();
@@ -30,9 +32,12 @@ export default function Home() {
 
   useEffect(() => {
     if (invoices) {
-      const { total, totalDiscount } = getCustomerTotal(invoices);
+      const { total, totalDiscount, totalPaid, totalOwed } =
+        getCustomerTotal(invoices);
       setCustomerTotal(total);
       setTotalDiscount(totalDiscount);
+      setTotalPaid(totalPaid);
+      setTotalOwed(totalOwed);
     }
   }, [invoices]);
 
@@ -69,7 +74,10 @@ export default function Home() {
   const getCustomerTotal = (invoices: Invoice[]) => {
     let total = 0;
     let totalDiscount = 0;
-    invoices.forEach(({ items, discount = 0 }) => {
+    let totalPaid = 0;
+    let totalOwed = 0;
+
+    invoices.forEach(({ items, discount = 0, settled }) => {
       let amount = items.reduce((accumulator, currentItem) => {
         return accumulator + currentItem.price * currentItem.quantity;
       }, 0);
@@ -79,8 +87,9 @@ export default function Home() {
         totalDiscount += discountAmount / 100;
       }
       total += amount / 100;
+      settled ? (totalPaid += amount/100) : (totalOwed += amount/100);
     });
-    return { total, totalDiscount };
+    return { total, totalDiscount, totalPaid, totalOwed };
   };
 
   const getInvoiceAmount = (items: LineItem[], discount: number = 0) => {
@@ -121,7 +130,7 @@ export default function Home() {
 
         <GeneralBox>
           <TableContainer>
-            <Table fontSize="sm" variant="striped" colorScheme="gray">
+            <Table fontSize="sm" variant="striped">
               <Thead>
                 <Tr>
                   <Th>Invoice #</Th>
@@ -158,7 +167,7 @@ export default function Home() {
           </TableContainer>
         </GeneralBox>
         <GeneralBox>
-          <Table fontSize="sm">
+          <Table fontSize="sm"  variant="striped">
             <Tbody>
               <Tr>
                 <Td>
@@ -176,14 +185,14 @@ export default function Home() {
                 <Td>
                   <strong>Total Paid:</strong>
                 </Td>
-                <Td textAlign="right">???</Td>
+                <Td textAlign="right">{formatCurrency(totalPaid)}</Td>
               </Tr>
               <Tr>
                 <Td border="none">
                   <strong>Total Owed:</strong>
                 </Td>
                 <Td border="none" textAlign="right">
-                  ???
+                  {formatCurrency(totalOwed)}
                 </Td>
               </Tr>
             </Tbody>
