@@ -25,7 +25,7 @@ You are free to add any other additional packages you require and can edit/refac
   - [+] Sort the api by invoice number
   - [+] Add a discount of 10% to all invoices that are unpaid and are more than $100 in total (price on the invoice is in cents)
   - [+] Make sure that if there are no results that an appropriate status code is sent back
-  - [ ] Create a test for the API and test all cases
+  - [+] Create a test for the API and test all cases
 
 - [+] Add an `Amount` column to table to display the total value of the invoice
 

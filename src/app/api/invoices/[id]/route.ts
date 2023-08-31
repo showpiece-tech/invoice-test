@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import invoiceData from "@/data/invoices.json";
+import invoiceData from "../../../../data/invoices.json";
 import { ContextType } from "./route.types";
 
 export async function GET(request: Request, context: ContextType) {
