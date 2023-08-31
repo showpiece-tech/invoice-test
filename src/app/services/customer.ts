@@ -1,5 +1,6 @@
 import { Customer } from "@/utils/data-helpers";
 
+// Function to get Customer Details from API
 export const fetchCustomer = async (
   userId: string
 ): Promise<Customer | undefined> => {

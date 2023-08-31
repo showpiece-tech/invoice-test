@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import { DeleteModalProps } from "./types";
 
+// Custom component for modal view to delete invoice
 const DeleteModal: FC<DeleteModalProps> = ({
   isOpen,
   onClose,

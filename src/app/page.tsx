@@ -27,6 +27,8 @@ import { deleteInvoice, fetchInvoices } from "./services/invoice";
 import { DeleteIcon } from "@chakra-ui/icons";
 
 export default function Home() {
+
+  // Define states to work with customer, invoices, totals and button
   const [userId, setUserId] = useState("5ac51f7e-81b1-49c6-9c39-78b2d171abd6");
   const [customer, setCustomer] = useState<Customer | undefined>(undefined);
   const [invoices, setInvoices] = useState<Invoice[] | undefined>(undefined);
@@ -60,6 +62,7 @@ export default function Home() {
     }
   };
 
+  // Use hooks to track changing in userId and invoices
   useEffect(() => {
     (async () => {
       const customerData = await fetchCustomer(userId);

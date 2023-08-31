@@ -1,5 +1,3 @@
-import { faker } from "@faker-js/faker";
-
 export interface Customer {
   id: string;
   name: string;
@@ -33,6 +31,7 @@ export const formatDateValue = (value: Date) => {
   return dateValue.toLocaleDateString("en-GB").replace(/\//g, "-");
 };
 
+// Function to calculate totals when invoices content changes
 export const calculateTotals = (invoices: Invoice[]) => {
   let invoicesDiscountTotal = 0;
   let invoicesTotal = 0;

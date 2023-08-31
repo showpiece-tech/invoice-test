@@ -1,5 +1,6 @@
 import { Invoice } from "@/utils/data-helpers";
 
+// Function to get Invoices Details from API
 export const fetchInvoices = async (
   userId: string
 ): Promise<Invoice[] | undefined> => {
@@ -17,6 +18,7 @@ export const fetchInvoices = async (
   }
 };
 
+// Function to delete invoice using API
 export const deleteInvoice = async (
   invoiceId: string
 ): Promise<number | undefined> => {
