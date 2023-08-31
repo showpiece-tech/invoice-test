@@ -1,7 +1,6 @@
 'use client';
 
-import { Box, Text, Image, Flex } from "@chakra-ui/react";
-import NextImage from "next/image";
+import { Box, Flex } from "@chakra-ui/react";
 
 interface PageWrapperProps {
   children: React.ReactNode;
@@ -10,7 +9,7 @@ interface PageWrapperProps {
 export const PageWrapper: React.FC<PageWrapperProps> = ({children}) => {
   return (
     <Flex minHeight="100vh" w="100%" justifyContent="center" alignItems="center">
-      <Box maxW="700px" w="100%" p={4}>
+      <Box maxW="800px" w="100%" p={4}>
         {children}
       </Box>
     </Flex>
