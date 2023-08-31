@@ -7,38 +7,6 @@ export interface Customer {
   email: string;
   phone: string;
 }
-export const createCustomer = (): Customer => {
-  return {
-    id: faker.string.uuid(),
-    name: faker.person.fullName(),
-    address: faker.location.streetAddress(),
-    email: faker.internet.email(),
-    phone: faker.phone.imei(),
-  };
-};
-
-interface Company {
-  id: string;
-  company: string;
-  logo: string;
-  address: string;
-  email: string;
-  phone: string;
-}
-export const createCompany = (): Company => {
-  return {
-    id: faker.string.uuid(),
-    company: faker.company.name(),
-    logo: faker.image.urlLoremFlickr({
-      category: "nature",
-      width: 350,
-      height: 350,
-    }),
-    address: faker.location.streetAddress(),
-    email: faker.internet.email(),
-    phone: faker.phone.number(),
-  };
-};
 
 export interface LineItem {
   title: string;
@@ -46,14 +14,6 @@ export interface LineItem {
   price: number;
   quantity: number;
 }
-export const createLineItem = (): LineItem => {
-  return {
-    title: faker.commerce.productName(),
-    description: faker.commerce.productDescription(),
-    price: faker.number.int({ min: 20, max: 250 }),
-    quantity: faker.number.int({ min: 1, max: 15 }),
-  };
-};
 
 export interface Invoice {
   id: string;
@@ -64,37 +24,32 @@ export interface Invoice {
   recipient: string;
   patron: string;
   items: LineItem[];
-  invoiceTotal?: number;
+  invoiceTotal: number;
   discount?: number;
 }
 
-export interface InvoiceAPIRespose {
-  data: Invoice[];
-  invoicesDiscountTotal: number;
-  invoicesTotal: number;
-  invoicesPaidTotal: number;
-  invoicesOwedTotal: number;
-}
+export const formatDateValue = (value: Date) => {
+  const dateValue = new Date(value);
+  return dateValue.toLocaleDateString("en-GB").replace(/\//g, "-");
+};
 
-export const createInvoice = (
-  customer: string,
-  company: string,
-  lineItems: number
-): Invoice => {
-  let items: LineItem[] = [];
+export const calculateTotals = (invoices: Invoice[]) => {
+  let invoicesDiscountTotal = 0;
+  let invoicesTotal = 0;
+  let invoicesPaidTotal = 0;
+  let invoicesOwedTotal = 0;
 
-  for (let i = 0; i < lineItems; i++) {
-    items.push(createLineItem());
-  }
-
+  invoices.forEach((invoice) => {
+    invoicesTotal += invoice.invoiceTotal;
+    if (invoice.discount && invoice.discount > 0) {
+      invoicesOwedTotal += invoice.invoiceTotal;
+      invoicesDiscountTotal += (invoice.invoiceTotal * invoice.discount) / 100;
+    } else invoicesPaidTotal += invoice.invoiceTotal;
+  });
   return {
-    id: faker.string.uuid(),
-    number: faker.number.int({ min: 1, max: 100 }),
-    dateIssued: faker.date.recent(),
-    dateDue: faker.date.future(),
-    settled: faker.datatype.boolean({ probability: 0.65 }),
-    recipient: customer,
-    patron: company,
-    items,
+    invoicesDiscountTotal,
+    invoicesOwedTotal,
+    invoicesPaidTotal,
+    invoicesTotal,
   };
 };

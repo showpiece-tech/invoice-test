@@ -31,9 +31,9 @@ You are free to add any other additional packages you require and can edit/refac
 
 - [+] Calculate the totals for `Invoice Total`, `Total Paid` and `Total Owed`
 
-- [ ] Add a feature that enables the user to delete invoices that have not been paid, user should get a prompt to confirm before deleting the item
+- [+] Add a feature that enables the user to delete invoices that have not been paid, user should get a prompt to confirm before deleting the item
 
-- [ ] Format all dates `dd-mm-yyyy` 
+- [+] Format all dates `dd-mm-yyyy` 
 
 - [+] Currency is give in cents, format them as `$00.00`
 
@@ -41,13 +41,13 @@ You are free to add any other additional packages you require and can edit/refac
 
 - [+] Highlight table rows with unpaid invoices in red
 
-- [ ] Fix the table with the totals to look like the one designed, floating to the right
+- [+] Fix the table with the totals to look like the one designed, floating to the right
 
 - [+] If there is a discount, display the discounted price in the table and highlight the amount in green.
 
 - [+] Add the `Discount` to the totals table at the bottom panel
 
-- [ ] Mobile - fix the invoice # column to be sticky on the left side when table scrolls horizontally 
+- [+] Mobile - fix the invoice # column to be sticky on the left side when table scrolls horizontally 
 
 ---
 ## Designs

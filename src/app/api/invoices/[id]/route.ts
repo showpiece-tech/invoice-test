@@ -16,12 +16,6 @@ export async function GET(request: Request, context: ContextType) {
   // Sort invoices by number
   const sortedInvoiceData = data.sort((a, b) => a.number - b.number);
 
-  // Calculate totals
-  let invoicesDiscountTotal = 0;
-  let invoicesTotal = 0;
-  let invoicesPaidTotal = 0;
-  let invoicesOwedTotal = 0;
-
   // Find discounted invoices and apply discount
   const discountedInvoices = sortedInvoiceData.map((invoice) => {
     let invoiceTotal = invoice.items.reduce(
@@ -38,13 +32,9 @@ export async function GET(request: Request, context: ContextType) {
     if (!invoice.settled) {
       if (invoiceTotal >= 100) {
         discount = 10;
-        invoicesDiscountTotal += invoiceTotal * 0.1;
         invoiceTotal = invoiceTotal * 0.9;
       }
-      invoicesOwedTotal += invoiceTotal;
-    } else invoicesPaidTotal += invoiceTotal;
-
-    invoicesTotal += invoiceTotal;
+    }
 
     return { ...invoice, invoiceTotal, discount };
   });
@@ -60,11 +50,16 @@ export async function GET(request: Request, context: ContextType) {
   else
     response = NextResponse.json({
       data: discountedInvoices,
-      invoicesDiscountTotal,
-      invoicesTotal,
-      invoicesPaidTotal,
-      invoicesOwedTotal,
     });
 
   return response;
+}
+
+export async function DELETE(_request: Request, context: ContextType) {
+  // Delete logic
+  // We don't have access to any data source beside file, so I wont be implemeting logic for delete here
+  return NextResponse.json(
+    { message: `Item ${context.params.id} deleted` },
+    { status: 200 }
+  );
 }
