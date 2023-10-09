@@ -1,4 +1,4 @@
-import { faker } from '@faker-js/faker';
+import { fa, faker } from '@faker-js/faker';
 
 export interface Customer {
   id: string;
@@ -25,6 +25,7 @@ interface Company {
   email: string;
   phone: string;
 }
+
 export const createCompany = () : Company => {
   return {
     id: faker.string.uuid(),
@@ -61,14 +62,16 @@ export interface Invoice {
   patron: string;
   items: LineItem[];
   discount?: number;
+  amount?: number;
+  deleted: boolean;
 }
+
 export const createInvoice = (customer: string, company: string, lineItems: number): Invoice => {
   let items: LineItem[] = [];
-
   for (let i = 0; i < lineItems; i++) {
     items.push(createLineItem())
   }
-
+  const dateDue: Date = faker.date.future();
   return {
     id: faker.string.uuid(),
     number: faker.number.int({min: 1, max: 100}),
@@ -78,5 +81,6 @@ export const createInvoice = (customer: string, company: string, lineItems: numb
     recipient: customer,
     patron: company,
     items,
+    deleted: false
   }
 }

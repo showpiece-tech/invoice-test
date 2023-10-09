@@ -1,13 +1,15 @@
 'use client';
 
-import { Box, Text, Image, Flex } from "@chakra-ui/react";
+import { Box,BoxProps, Text, Image, Flex } from "@chakra-ui/react";
 import NextImage from "next/image";
 
 interface GeneralBoxProps {
   children: React.ReactNode;
 }
 
-export const GeneralBox: React.FC<GeneralBoxProps> = ({children}) => {
+interface GeneralBoxProps extends BoxProps{}
+
+export const GeneralBox: React.FC<GeneralBoxProps> = ({ children, ...rest }) => {
   return (
     <Box
       border="1px solid"
@@ -16,6 +18,7 @@ export const GeneralBox: React.FC<GeneralBoxProps> = ({children}) => {
       bg="white"
       p={3}
       mb={5}
+      {...rest}
     >
       {children}
     </Box>

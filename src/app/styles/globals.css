@@ -1,0 +1,32 @@
+.striped-table tr:nth-child(odd) {
+  background-color: #edf1f7; /* Background color for odd rows */
+  transition:  background-color 500ms ease;
+}
+
+.striped-table tr:nth-child(even) {
+  background-color: #fff; /* Background color for even rows */
+  transition:  background-color 500ms ease;
+  
+}
+
+.sticky-column {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  min-width: 100px; /* Set a minimum width for the first column */
+}
+
+.striped-table td {
+  transition: font-size 500ms ease-in-out, padding 500ms ease-in-out, background-color 500ms ease;
+  overflow: hidden;
+}
+
+.deleting,
+.deleting > td{
+  border-width: 0;
+  font-size: 0;
+  padding: 0;
+  line-height: 0;
+  height: 0;
+  color: transparent;
+}

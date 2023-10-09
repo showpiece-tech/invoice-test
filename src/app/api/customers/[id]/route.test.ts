@@ -1,7 +1,6 @@
-import fetch from "node-fetch";
 import { createMocks } from 'node-mocks-http';
 import { GET } from './route'
-describe("Find Customer Route", () => {
+describe("Customer Route", () => {
   describe("GET customer", () => {
     const customerId = '5ac51f7e-81b1-49c6-9c39-78b2d171abd6';
     const { req } = createMocks({

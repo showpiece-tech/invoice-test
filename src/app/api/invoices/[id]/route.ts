@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import invoiceData from '@/data/invoices.json';
+import invoiceData from '../../../../data/invoices.json';
 
 interface ParamType {
   id: string;
@@ -10,8 +10,9 @@ interface ContextType {
 }
 
 export async function GET(request: Request, context: ContextType) {
-  const data = invoiceData.invoices
-    .filter(({recipient}) => recipient === context.params.id );
-
-  return NextResponse.json({ data })
+  const data = invoiceData.invoices.find(({id}) => id === context.params.id );
+    return NextResponse.json(
+      { data },
+      {status: data ? 200 : 404}
+    );
 }

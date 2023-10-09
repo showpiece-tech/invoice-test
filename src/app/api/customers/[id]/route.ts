@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import type { NextApiRequest } from "next";
 import customerData from '../../../../data/customers.json';
 
 interface ParamType {
