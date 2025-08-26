@@ -1,7 +1,6 @@
 'use client'
 import { useState } from "react";
 import {
-  Flex,
   Heading,
   Text,
   Table,
@@ -14,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import { PageWrapper } from "./components/pageWrapper";
 import { GeneralBox } from "./components/generalBox";
-import { Customer, Invoice } from "@/utils/data-helpers";
+import { Customer, Invoice } from "@/utils/types";
 
 export default function Home() {
   const [userId, setUserId] = useState('5ac51f7e-81b1-49c6-9c39-78b2d171abd6');
